@@ -8,6 +8,7 @@ build
 *.log
 .env
 .env.*
+data
 Dockerfile
 docker-compose.yml
 README.md

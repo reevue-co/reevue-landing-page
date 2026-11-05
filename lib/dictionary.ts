@@ -25,6 +25,7 @@ export type Dictionary = {
     problem: string;
     product: string;
     features: string;
+    integrations: string;
     portal: string;
     faq: string;
     cta: string;
@@ -73,6 +74,7 @@ export type Dictionary = {
     interest: string;
     interestRent: string;
     interestSale: string;
+    interestBoth: string;
     solution: string;
     solutionPortal: string;
     solutionSite: string;
@@ -164,6 +166,16 @@ export type Dictionary = {
     badge: string;
     note: string;
     items: { title: string; text: string }[];
+  };
+  integrations: {
+    badge: string;
+    title: string;
+    text: string;
+    note: string;
+    points: string[];
+    diagramLabel: string;
+    source: string;
+    destinations: string[];
   };
   portal: {
     kicker: string;

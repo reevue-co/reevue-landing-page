@@ -13,6 +13,7 @@ const sectionIds = [
   ["problem", "problema"],
   ["product", "produto"],
   ["features", "recursos"],
+  ["integrations", "integracoes"],
   ["portal", "portal"],
   ["faq", "perguntas"],
 ] as const;
@@ -37,7 +38,8 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-40">
-      <div className={`${shell} pt-3`}>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-background from-45% to-transparent" />
+      <div className={`${shell} relative pt-3`}>
         <div className="flex h-14 items-center gap-2 rounded-full bg-paper/95 px-2 shadow-[0_16px_40px_-28px_rgba(18,28,48,0.55)] ring-1 ring-line sm:px-3">
           <a href={`/${locale}`} className="shrink-0 rounded-full">
             <Wordmark />
@@ -49,7 +51,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
                 <li key={section.id}>
                   <a
                     href={`#${section.id}`}
-                    className="rounded-full px-3 py-2 text-sm font-medium text-ink/80 hover:text-ink"
+                    className="rounded-full px-3 py-2 text-sm font-medium text-ink/80 transition-colors duration-300 hover:bg-background hover:text-ink"
                   >
                     {section.label}
                   </a>

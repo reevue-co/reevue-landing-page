@@ -4,7 +4,7 @@ import { listingPhoto, photos } from "@/lib/media";
 
 export function HeroPreview({ dict }: { dict: Dictionary }) {
   return (
-    <figure className="min-w-0">
+    <figure className="min-w-0 motion-safe:animate-[rise_900ms_cubic-bezier(0.32,0.72,0,1)_140ms_both]">
       <div aria-hidden="true" className="rounded-[1.5rem] bg-paper/70 p-1.5 shadow-[0_40px_90px_-48px_rgba(18,36,72,0.55)] ring-1 ring-line">
         <div className="overflow-hidden rounded-[1.2rem] bg-paper">
         <div className="flex items-center gap-2 px-3 py-2">

@@ -16,6 +16,7 @@ export const en = {
     problem: "The problem",
     product: "Product",
     features: "Features",
+    integrations: "Integrations",
     portal: "Portal",
     faq: "Questions",
     cta: "I want to join",
@@ -64,6 +65,7 @@ export const en = {
     interest: "Interest",
     interestRent: "Rent",
     interestSale: "Sale",
+    interestBoth: "Both",
     solution: "Which solution interests you?",
     solutionPortal: "Listings portal",
     solutionSite: "Website and management for agencies",
@@ -315,6 +317,20 @@ export const en = {
       },
     ],
   },
+  integrations: {
+    badge: "Planned",
+    title: "The same listing, on real-estate portals too.",
+    text: "Reevue is being designed so the agency enters a property once and sends the listing to the portals it chooses. The integration is part of the plan and is not available yet.",
+    note: "Mentioning real-estate portals does not mean a partnership, a ready connection, or guaranteed publication.",
+    points: [
+      "One entry, planned for several destinations.",
+      "The agency chooses where a listing can go.",
+      "Updating or removing it in the catalog is the planned starting point.",
+    ],
+    diagramLabel: "Planned destinations from the catalog",
+    source: "Agency catalog",
+    destinations: ["Listing portals", "Classifieds", "Agency website", "Reevue portal"],
+  },
   portal: {
     kicker: "Complementary product, in planning",
     title: "A portal to widen distribution, when it makes sense.",
@@ -345,6 +361,11 @@ export const en = {
         question: "Is Reevue available?",
         answer:
           "Reevue is in development. Registration lets you receive updates and be contacted about the first tests.",
+      },
+      {
+        question: "Does Reevue already publish on real-estate portals?",
+        answer:
+          "Not yet. Integration with real-estate portals is planned. There is no confirmed partnership and no publication available.",
       },
       {
         question: "Who is it for?",

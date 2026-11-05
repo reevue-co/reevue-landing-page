@@ -11,7 +11,7 @@ npm run dev
 
 Abra [http://localhost:3000](http://localhost:3000). O servidor redireciona para `/pt-br`.
 
-Para o formulário enviar de verdade, copie `.env.example` para `.env.local` e preencha as variáveis do Google Sheets (veja abaixo).
+No `npm run dev`, o formulário grava em `data/contacts.xls` e cria esse arquivo se ele ainda não existir. As variáveis do Google Sheets só são usadas em produção (`npm start`, Docker ou Vercel).
 
 ```bash
 npm run lint
@@ -36,10 +36,10 @@ O formulário (nome, perfil, imobiliária, país, estado, cidade, DDI + WhatsApp
 2. Extensões → Apps Script. Cole o conteúdo de `scripts/google-sheet.gs`.
 3. Configurações do projeto → Propriedades do script → adicione `SECRET` com uma senha longa qualquer.
 4. Implantar → Nova implantação → tipo "App da Web". Executar como: você. Quem tem acesso: qualquer pessoa. Autorize e copie a URL `/exec`.
-5. No `.env.local` (e na Vercel): `GOOGLE_SHEET_WEBHOOK_URL` = URL copiada, `GOOGLE_SHEET_WEBHOOK_SECRET` = o mesmo `SECRET`.
-6. Reinicie `npm run dev`. Se alterar o script depois, crie uma nova versão da implantação.
+5. Em produção (Vercel, Docker ou `npm start`): `GOOGLE_SHEET_WEBHOOK_URL` = URL copiada, `GOOGLE_SHEET_WEBHOOK_SECRET` = o mesmo `SECRET`.
+6. Se alterar o script depois, crie uma nova versão da implantação.
 
-Sem essas variáveis o formulário mostra o erro de envio.
+Sem essas variáveis, o formulário em produção mostra o erro de envio. No `npm run dev` elas não são usadas: cada envio entra em `data/contacts.xls`.
 
 ## Publicar na Vercel
 

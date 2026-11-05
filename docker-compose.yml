@@ -1,5 +1,6 @@
 # Reads a .env file in this directory (see .env.example).
 # NEXT_PUBLIC_* are baked in at build time. Rebuild after changing them.
+# The container runs in production and posts leads to Google Sheets.
 # GOOGLE_SHEET_* are read when the container starts.
 
 name: reevue

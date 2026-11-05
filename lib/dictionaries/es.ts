@@ -16,6 +16,7 @@ export const es = {
     problem: "El problema",
     product: "Producto",
     features: "Recursos",
+    integrations: "Integraciones",
     portal: "Portal",
     faq: "Preguntas",
     cta: "Quiero participar",
@@ -64,6 +65,7 @@ export const es = {
     interest: "Interés",
     interestRent: "Alquiler",
     interestSale: "Venta",
+    interestBoth: "Ambos",
     solution: "¿Qué solución te interesa?",
     solutionPortal: "Portal de anuncios",
     solutionSite: "Sitio web y gestión para inmobiliarias",
@@ -319,6 +321,20 @@ export const es = {
       },
     ],
   },
+  integrations: {
+    badge: "Planificado",
+    title: "El mismo aviso, también en los portales inmobiliarios.",
+    text: "Reevue se está diseñando para que la inmobiliaria cargue la propiedad una vez y envíe el aviso a los portales que elija. La integración forma parte de la planificación y todavía no está disponible.",
+    note: "Hablar de portales inmobiliarios no significa una alianza, una conexión lista ni una publicación garantizada.",
+    points: [
+      "Un registro previsto para varios destinos.",
+      "La inmobiliaria elige a dónde puede ir el aviso.",
+      "Actualizar o retirar en el catálogo es el punto de partida previsto.",
+    ],
+    diagramLabel: "Destinos previstos desde el catálogo",
+    source: "Catálogo de la inmobiliaria",
+    destinations: ["Portales de avisos", "Clasificados", "Sitio de la inmobiliaria", "Portal Reevue"],
+  },
   portal: {
     kicker: "Producto complementario, en planificación",
     title: "Un portal para ampliar la difusión, cuando tenga sentido.",
@@ -349,6 +365,11 @@ export const es = {
         question: "¿Reevue ya está disponible?",
         answer:
           "Reevue está en desarrollo. El registro permite recibir novedades y ser contactado sobre las pruebas iniciales.",
+      },
+      {
+        question: "¿Reevue ya publica en los portales inmobiliarios?",
+        answer:
+          "Todavía no. La integración con portales inmobiliarios está planificada. No hay una alianza confirmada ni una publicación disponible.",
       },
       {
         question: "¿Para quién es?",

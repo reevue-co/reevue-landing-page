@@ -44,6 +44,7 @@ const footerLinks = [
   ["produto", "product"],
   ["recursos", "features"],
   ["funcionamento", "how"],
+  ["integracoes", "integrations"],
   ["expansao", "expansion"],
   ["portal", "portal"],
   ["acesso", "early"],
@@ -69,6 +70,7 @@ export function LandingPage({ locale, dict }: { locale: Locale; dict: Dictionary
         <Features dict={dict} />
         <HowItWorks dict={dict} />
         <Expansion dict={dict} />
+        <Integrations dict={dict} />
         <Portal dict={dict} />
         <EarlyAccess dict={dict} />
         <Faq dict={dict} />
@@ -108,18 +110,22 @@ function Hero({ dict }: { dict: Dictionary }) {
 
 function Problem({ dict }: { dict: Dictionary }) {
   return (
-    <section id="problema" className="scroll-mt-[4.25rem] py-10 sm:py-14">
+    <section id="problema" className="scroll-mt-[4.25rem] py-16 sm:py-24">
       <div className={shell}>
+        <div className="reveal">
         <h2 className="max-w-3xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
           {dict.problem.title}
         </h2>
         <p className="mt-5 max-w-xl text-pretty text-base leading-7 text-muted sm:text-lg">{dict.problem.intro}</p>
-        <ol className="mt-8 grid gap-8 md:grid-cols-3 md:gap-8">
+        </div>
+        <ol className="mt-10 grid gap-4 md:grid-cols-3">
           {dict.problem.items.map((item, index) => (
-            <li key={item.title}>
+            <li key={item.title} className="reveal">
+              <div className="surface h-full p-6">
               <p className="text-sm font-medium tracking-wide text-blue">0{index + 1}</p>
               <h3 className="mt-3 text-xl font-medium tracking-tight text-ink">{item.title}</h3>
-              <p className="mt-2 max-w-sm text-pretty leading-7 text-muted">{item.text}</p>
+              <p className="mt-2 text-pretty leading-7 text-muted">{item.text}</p>
+              </div>
             </li>
           ))}
         </ol>
@@ -133,9 +139,9 @@ function Problem({ dict }: { dict: Dictionary }) {
 
 function Value({ dict }: { dict: Dictionary }) {
   return (
-    <section id="proposta" className="scroll-mt-[4.25rem] py-4 sm:py-6">
+    <section id="proposta" className="scroll-mt-[4.25rem] py-8 sm:py-12">
       <div className={shell}>
-        <div className="grid gap-10 rounded-[2rem] bg-paper px-6 py-8 shadow-[0_30px_80px_-48px_rgba(18,28,48,0.45)] ring-1 ring-line sm:px-10 sm:py-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+        <div className="reveal grid gap-10 rounded-[2rem] bg-paper px-6 py-8 shadow-[0_30px_80px_-48px_rgba(18,28,48,0.45)] ring-1 ring-line sm:px-10 sm:py-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
           <div>
             <p className="text-sm font-medium text-blue">{dict.value.status}</p>
             <h2 className="mt-3 max-w-md text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-4xl">
@@ -167,8 +173,8 @@ function Value({ dict }: { dict: Dictionary }) {
 
 function Demo({ dict }: { dict: Dictionary }) {
   return (
-    <section id="produto" className="scroll-mt-[4.25rem] py-10 sm:py-14">
-      <div className={shell}>
+    <section id="produto" className="scroll-mt-[4.25rem] py-16 sm:py-24">
+      <div className={`${shell} reveal`}>
         <h2 className="max-w-3xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
           {dict.demo.title}
         </h2>
@@ -190,20 +196,21 @@ function Demo({ dict }: { dict: Dictionary }) {
 
 function Features({ dict }: { dict: Dictionary }) {
   return (
-    <section id="recursos" className="scroll-mt-[4.25rem] py-4 sm:py-6">
+    <section id="recursos" className="scroll-mt-[4.25rem] py-8 sm:py-12">
       <div className={shell}>
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="reveal flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
             {dict.features.title}
           </h2>
           <p className="text-sm font-medium text-blue">{dict.features.planned}</p>
         </div>
         <p className="mt-5 max-w-2xl text-pretty leading-7 text-muted">{dict.features.intro}</p>
-        <ul className="mt-12 grid gap-x-16 gap-y-8 sm:grid-cols-2">
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2">
           {dict.features.items.map((item, index) => {
             const Icon = featureIcons[index] ?? PiChatCircleDuotone;
             return (
-              <li key={item.title} className="grid grid-cols-[auto_minmax(0,1fr)] gap-4">
+              <li key={item.title} className="reveal">
+              <div className="surface grid h-full grid-cols-[auto_minmax(0,1fr)] gap-4 p-5">
                 <span className="flex size-10 items-center justify-center rounded-2xl bg-blue-soft text-blue">
                   <Icon className="size-6" />
                 </span>
@@ -211,6 +218,7 @@ function Features({ dict }: { dict: Dictionary }) {
                   <h3 className="font-medium tracking-tight text-ink">{item.title}</h3>
                   <p className="mt-1 leading-7 text-muted">{item.detail}</p>
                 </div>
+              </div>
               </li>
             );
           })}
@@ -222,18 +230,22 @@ function Features({ dict }: { dict: Dictionary }) {
 
 function HowItWorks({ dict }: { dict: Dictionary }) {
   return (
-    <section id="funcionamento" className="scroll-mt-[4.25rem] py-10 sm:py-14">
+    <section id="funcionamento" className="scroll-mt-[4.25rem] py-16 sm:py-24">
       <div className={shell}>
+        <div className="reveal">
         <h2 className="mx-auto max-w-3xl text-balance text-center text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
           {dict.how.title}
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-pretty text-center leading-7 text-muted">{dict.how.note}</p>
-        <ol className="mt-14 grid gap-10 md:grid-cols-3">
+        </div>
+        <ol className="mt-12 grid gap-4 md:grid-cols-3">
           {dict.how.steps.map((step, index) => (
-            <li key={step.title} className="border-t border-line pt-6">
+            <li key={step.title} className="reveal">
+              <div className="surface h-full p-6">
               <p className="text-4xl font-medium tracking-[-0.05em] text-blue/30">0{index + 1}</p>
               <h3 className="mt-4 text-xl font-medium tracking-tight text-ink">{step.title}</h3>
               <p className="mt-2 text-pretty leading-7 text-muted">{step.text}</p>
+              </div>
             </li>
           ))}
         </ol>
@@ -244,9 +256,9 @@ function HowItWorks({ dict }: { dict: Dictionary }) {
 
 function Expansion({ dict }: { dict: Dictionary }) {
   return (
-    <section id="expansao" className="scroll-mt-[4.25rem] py-4 sm:py-6">
+    <section id="expansao" className="scroll-mt-[4.25rem] py-8 sm:py-12">
       <div className={shell}>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+        <div className="reveal grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
           <div>
             <p className="text-sm font-medium text-blue">{dict.expansion.badge}</p>
             <h2 className="mt-3 text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-4xl">
@@ -257,7 +269,7 @@ function Expansion({ dict }: { dict: Dictionary }) {
           </div>
           <ul className="divide-y divide-line">
             {dict.expansion.items.map((item) => (
-              <li key={item.title} className="grid gap-1 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-6">
+              <li key={item.title} className="grid gap-1 rounded-2xl px-4 py-5 transition-colors duration-300 hover:bg-paper sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-6">
                 <div>
                   <h3 className="font-medium tracking-tight text-ink">{item.title}</h3>
                   <p className="mt-1 text-sm leading-6 text-muted">{item.text}</p>
@@ -272,10 +284,49 @@ function Expansion({ dict }: { dict: Dictionary }) {
   );
 }
 
+function Integrations({ dict }: { dict: Dictionary }) {
+  return (
+    <section id="integracoes" className="scroll-mt-[4.25rem] py-16 sm:py-24">
+      <div className={`${shell} reveal grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]`}>
+        <div>
+          <p className="text-sm font-medium text-blue">{dict.integrations.badge}</p>
+          <h2 className="mt-3 max-w-xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-4xl">
+            {dict.integrations.title}
+          </h2>
+          <p className="mt-4 max-w-xl text-pretty leading-7 text-muted">{dict.integrations.text}</p>
+          <ul className="mt-6 grid gap-3">
+            {dict.integrations.points.map((point) => (
+              <li key={point} className="flex gap-3 text-sm leading-6 text-ink">
+                <PiCheckBold className="mt-0.5 size-5 shrink-0 text-blue" />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 max-w-xl text-sm leading-6 text-ink">{dict.integrations.note}</p>
+        </div>
+        <div className="rounded-[1.8rem] bg-paper p-6 shadow-[0_30px_80px_-48px_rgba(18,36,72,0.4)] ring-1 ring-line sm:p-8">
+          <p className="text-sm font-medium text-muted">{dict.integrations.diagramLabel}</p>
+          <p className="mx-auto mt-6 w-fit rounded-full bg-blue-soft px-4 py-2 text-sm font-semibold text-blue">
+            {dict.integrations.source}
+          </p>
+          <span aria-hidden="true" className="mx-auto mt-3 block h-8 w-px bg-line" />
+          <ul className="grid grid-cols-2 gap-3">
+            {dict.integrations.destinations.map((name) => (
+              <li key={name} className="rounded-2xl bg-background px-4 py-4 text-sm font-medium leading-5 text-ink ring-1 ring-line">
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Portal({ dict }: { dict: Dictionary }) {
   return (
-    <section id="portal" className="scroll-mt-[4.25rem] py-10 sm:py-14">
-      <div className={`${shell} grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(16rem,0.85fr)]`}>
+    <section id="portal" className="scroll-mt-[4.25rem] py-16 sm:py-24">
+      <div className={`${shell} reveal grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(16rem,0.85fr)]`}>
         <div>
           <p className="text-sm font-medium text-blue">{dict.portal.kicker}</p>
           <h2 className="mt-3 max-w-xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-4xl">
@@ -299,9 +350,9 @@ function Portal({ dict }: { dict: Dictionary }) {
 
 function EarlyAccess({ dict }: { dict: Dictionary }) {
   return (
-    <section id="acesso" className="scroll-mt-[4.25rem] py-4 sm:py-6">
+    <section id="acesso" className="scroll-mt-[4.25rem] py-8 sm:py-12">
       <div className={shell}>
-        <div className="flex flex-col items-start gap-6 rounded-[2rem] bg-panel px-6 py-10 text-panel-fg sm:px-12 sm:py-12 lg:flex-row lg:items-end lg:justify-between">
+        <div className="reveal flex flex-col items-start gap-6 overflow-hidden rounded-[2rem] bg-[radial-gradient(32rem_16rem_at_100%_0%,rgb(255_255_255/0.2),transparent_58%),linear-gradient(135deg,#2f66f3,#1d45c8)] px-6 py-12 text-white sm:px-12 sm:py-14 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
             <h2 className="text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] sm:text-4xl">
               {dict.early.title}
@@ -317,12 +368,12 @@ function EarlyAccess({ dict }: { dict: Dictionary }) {
 
 function Faq({ dict }: { dict: Dictionary }) {
   return (
-    <section id="perguntas" className="scroll-mt-[4.25rem] py-10 sm:py-14">
-      <div className={`${shell} grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16`}>
+    <section id="perguntas" className="scroll-mt-[4.25rem] py-16 sm:py-24">
+      <div className={`${shell} reveal grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16`}>
         <h2 className="text-balance text-3xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">{dict.faq.title}</h2>
         <div>
           {dict.faq.items.map((item) => (
-            <details key={item.question} className="group border-b border-line">
+            <details key={item.question} className="group border-b border-line transition-colors duration-300 open:bg-paper/70">
               <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden">
                 <h3 className="text-lg font-medium tracking-tight text-ink">{item.question}</h3>
                 <span className="faq-icon mt-1 text-xl leading-none text-blue" aria-hidden="true">
@@ -395,7 +446,7 @@ function Footer({
             <ul className="mt-3 grid gap-2">
               {links.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-sm text-muted hover:text-ink">
+                  <a href={link.href} className="text-sm text-muted transition-colors duration-300 hover:text-ink">
                     {link.label}
                   </a>
                 </li>
@@ -429,7 +480,7 @@ function SocialIcon({
   children: ReactNode;
 }) {
   const className =
-    "flex size-11 items-center justify-center rounded-full text-ink ring-1 ring-line hover:bg-paper";
+    "flex size-11 items-center justify-center rounded-full text-ink ring-1 ring-line transition-[transform,background-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:bg-paper";
 
   if (!href) {
     return (

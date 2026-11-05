@@ -6,7 +6,7 @@ export const countries = [
 ] as const;
 
 export const profiles = ["agency", "independent", "agent", "owner"] as const;
-export const interests = ["rent", "sale"] as const;
+export const interests = ["rent", "sale", "both"] as const;
 export const solutions = ["portal", "site", "both"] as const;
 export const hasSiteOptions = ["yes", "no"] as const;
 

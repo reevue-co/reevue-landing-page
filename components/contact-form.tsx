@@ -97,7 +97,7 @@ export function ContactForm({ locale, dict }: { locale: Locale; dict: Dictionary
   const regions = new Intl.DisplayNames([htmlLang[locale]], { type: "region" });
   const options = {
     profile: { agency: f.profileAgency, independent: f.profileIndependent, agent: f.profileAgent, owner: f.profileOwner },
-    interest: { rent: f.interestRent, sale: f.interestSale },
+    interest: { rent: f.interestRent, sale: f.interestSale, both: f.interestBoth },
     solution: { portal: f.solutionPortal, site: f.solutionSite, both: f.solutionBoth },
     hasSite: { yes: f.yes, no: f.no },
   };

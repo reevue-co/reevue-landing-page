@@ -2,6 +2,7 @@
 
 import { countries, hasSiteOptions, interests, profiles, solutions, type ContactState } from "@/lib/contact";
 import { hasLocale } from "@/lib/i18n";
+import { appendLocalLead } from "@/lib/local-sheet";
 
 const text = (data: FormData, key: string) => String(data.get(key) ?? "").trim();
 const oneOf = (list: readonly string[], value: string) => list.includes(value);
@@ -55,9 +56,53 @@ export async function submitContact(_prev: ContactState, data: FormData): Promis
     hasLocale(fields.locale);
   if (!valid) return invalid;
 
+  const lead = {
+    name: fields.name,
+    profile: fields.profile,
+    agencyName: isAgency ? fields.agencyName : "",
+    country: fields.country,
+    state: fields.state,
+    city: fields.city,
+    phone: `+${fields.dial} ${phone}`,
+    email: fields.email,
+    interest: fields.interest,
+    solution: fields.solution,
+    hasSite: fields.hasSite,
+    site: site ?? "",
+    difficulty: fields.difficulty,
+    consent: true,
+    locale: fields.locale,
+  };
+
+  if (process.env.NODE_ENV !== "production") {
+    try {
+      await appendLocalLead([
+        new Date().toISOString(),
+        lead.name,
+        lead.profile,
+        lead.agencyName,
+        lead.country,
+        lead.state,
+        lead.city,
+        lead.phone,
+        lead.email,
+        lead.interest,
+        lead.solution,
+        lead.hasSite,
+        lead.site,
+        lead.difficulty,
+        lead.locale,
+      ]);
+    } catch (error) {
+      console.error("[contact] Local sheet write failed:", error);
+      return { status: "error", fields };
+    }
+    return { status: "ok", fields: {} };
+  }
+
   const url = process.env.GOOGLE_SHEET_WEBHOOK_URL;
   if (!url) {
-    console.error("[contact] GOOGLE_SHEET_WEBHOOK_URL is empty or not loaded (restart npm run dev after editing .env.local)");
+    console.error("[contact] GOOGLE_SHEET_WEBHOOK_URL is empty");
     return { status: "error", fields };
   }
 
@@ -67,21 +112,7 @@ export async function submitContact(_prev: ContactState, data: FormData): Promis
       headers: { "Content-Type": "text/plain;charset=utf-8" }, // Apps Script reads the raw body
       body: JSON.stringify({
         secret: process.env.GOOGLE_SHEET_WEBHOOK_SECRET ?? "",
-        name: fields.name,
-        profile: fields.profile,
-        agencyName: isAgency ? fields.agencyName : "",
-        country: fields.country,
-        state: fields.state,
-        city: fields.city,
-        phone: `+${fields.dial} ${phone}`,
-        email: fields.email,
-        interest: fields.interest,
-        solution: fields.solution,
-        hasSite: fields.hasSite,
-        site: site ?? "",
-        difficulty: fields.difficulty,
-        consent: true,
-        locale: fields.locale,
+        ...lead,
       }),
       signal: AbortSignal.timeout(10_000),
     });

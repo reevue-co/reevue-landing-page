@@ -16,6 +16,7 @@ export const ptBr = {
     problem: "O problema",
     product: "Produto",
     features: "Recursos",
+    integrations: "Integrações",
     portal: "Portal",
     faq: "Perguntas",
     cta: "Quero participar",
@@ -64,6 +65,7 @@ export const ptBr = {
     interest: "Interesse",
     interestRent: "Aluguel",
     interestSale: "Venda",
+    interestBoth: "Ambos",
     solution: "Qual solução interessa a você?",
     solutionPortal: "Portal de anúncios",
     solutionSite: "Site e gestão para imobiliárias",
@@ -318,6 +320,20 @@ export const ptBr = {
       },
     ],
   },
+  integrations: {
+    badge: "Planejado",
+    title: "O mesmo anúncio, também nos portais imobiliários.",
+    text: "A Reevue está sendo desenhada para a imobiliária cadastrar o imóvel uma vez e encaminhar o anúncio aos portais que ela escolher. A integração faz parte do planejamento e ainda não está disponível.",
+    note: "Falar em portais imobiliários não significa parceria, conexão pronta nem publicação garantida.",
+    points: [
+      "Um cadastro previsto para vários destinos.",
+      "A imobiliária escolhe para onde o anúncio pode ir.",
+      "Atualizar ou retirar no catálogo é o ponto de partida previsto.",
+    ],
+    diagramLabel: "Destinos previstos a partir do catálogo",
+    source: "Catálogo da imobiliária",
+    destinations: ["Portais de anúncios", "Classificados", "Site da imobiliária", "Portal Reevue"],
+  },
   portal: {
     kicker: "Produto complementar, em planejamento",
     title: "Um portal para ampliar a divulgação, quando fizer sentido.",
@@ -348,6 +364,11 @@ export const ptBr = {
         question: "A Reevue já está disponível?",
         answer:
           "A Reevue está em desenvolvimento. O cadastro permite receber atualizações e ser contatado sobre os testes iniciais.",
+      },
+      {
+        question: "A Reevue já publica nos portais imobiliários?",
+        answer:
+          "Ainda não. A integração com portais imobiliários está planejada. Não há parceria confirmada nem publicação disponível.",
       },
       {
         question: "Para quem é a Reevue?",
