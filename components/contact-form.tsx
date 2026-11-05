@@ -337,20 +337,20 @@ export function ContactForm({ locale, dict }: { locale: Locale; dict: Dictionary
               className={`${input} py-3`}
             />
           </label>
+
+          <label className="flex items-start gap-3 rounded-xl bg-background px-4 py-3 text-sm leading-6 text-ink">
+            <input
+              name="consent"
+              type="checkbox"
+              value="yes"
+              required={step === 2}
+              defaultChecked={v.consent === "yes"}
+              className="mt-1 size-4 shrink-0 accent-blue-solid"
+            />
+            <span>{dict.early.support}</span>
+          </label>
         </div>
       </div>
-
-      <label className="flex items-start gap-3 rounded-xl bg-background px-4 py-3 text-sm leading-6 text-ink">
-        <input
-          name="consent"
-          type="checkbox"
-          value="yes"
-          required={step === 2}
-          defaultChecked={v.consent === "yes"}
-          className="mt-1 size-4 shrink-0 accent-blue-solid"
-        />
-        <span>{dict.early.support}</span>
-      </label>
 
       {(state.status === "invalid" || state.status === "error") && (
         <p ref={message} role="alert" className="text-sm font-medium text-red-700">

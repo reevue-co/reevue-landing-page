@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.vercel
+coverage
+out
+build
+*.log
+.env
+.env.*
+Dockerfile
+docker-compose.yml
+README.md
+AGENTS.md
