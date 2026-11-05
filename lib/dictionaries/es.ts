@@ -26,6 +26,11 @@ export const es = {
     list: "Idiomas disponibles",
     pt: "Português",
     es: "Español",
+    en: "English",
+  },
+  theme: {
+    toDark: "Usar tema oscuro",
+    toLight: "Usar tema claro",
   },
   form: {
     unavailable: "Registro disponible pronto",
@@ -332,6 +337,7 @@ export const es = {
     expansion: "Después del lanzamiento",
     early: "Acceso anticipado",
     contact: "Contacto",
+    social: "Redes sociales",
   },
   notFound: {
     title: "Página no encontrada",

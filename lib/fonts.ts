@@ -1,7 +1,7 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Outfit } from "next/font/google";
 
-export const geistSans = Geist({
-  variable: "--font-geist-sans",
+export const sans = Outfit({
+  variable: "--font-sans-family",
   subsets: ["latin"],
 });
 
@@ -10,4 +10,4 @@ export const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const fontClassName = `${geistSans.variable} ${geistMono.variable}`;
+export const fontClassName = `${sans.variable} ${geistMono.variable}`;

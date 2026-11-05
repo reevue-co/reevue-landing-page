@@ -1,14 +1,35 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #f3f6fa;
-  --foreground: #142033;
-  --muted: #3c4e64;
-  --line: #d5deea;
+  --background: #f4f5f7;
+  --foreground: #1c2128;
+  --muted: #5d6672;
+  --line: #e7e9ee;
   --paper: #ffffff;
-  --blue: #0a3f8c;
-  --blue-soft: #e7f1fb;
-  --ink: #101b2d;
+  --blue: #2457e6;
+  --blue-solid: #2457e6;
+  --blue-soft: #eef2ff;
+  --ink: #12151a;
+  --panel: #12151a;
+  --panel-foreground: #f7f8fa;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #101318;
+  --foreground: #e7ebf2;
+  --muted: #a3adba;
+  --line: #2c3442;
+  --paper: #171c24;
+  --blue: #9bb4ff;
+  --blue-solid: #2457e6;
+  --blue-soft: #1c2744;
+  --ink: #f3f6fb;
+  --panel: #232a36;
+  --panel-foreground: #f7f8fa;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -18,25 +39,36 @@
   --color-line: var(--line);
   --color-paper: var(--paper);
   --color-blue: var(--blue);
+  --color-blue-solid: var(--blue-solid);
   --color-blue-soft: var(--blue-soft);
   --color-ink: var(--ink);
-  --font-sans: var(--font-geist-sans), sans-serif;
+  --color-panel: var(--panel);
+  --color-panel-fg: var(--panel-foreground);
+  --font-sans: var(--font-sans-family), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 6.5rem;
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(72rem 28rem at 80% -8rem, rgb(36 87 230 / 0.09), transparent 62%),
+    var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
 }
 
+.dark body {
+  background:
+    radial-gradient(72rem 28rem at 80% -8rem, rgb(142 171 255 / 0.16), transparent 62%),
+    var(--background);
+}
+
 ::selection {
-  background: #c9ddf8;
+  background: color-mix(in srgb, var(--blue) 28%, transparent);
   color: var(--ink);
 }
 
@@ -68,7 +100,7 @@ body {
   clip: auto;
   overflow: visible;
   border-radius: 999px;
-  background: white;
+  background: var(--paper);
   padding: 0.75rem 1rem;
   color: var(--ink);
 }
@@ -86,7 +118,7 @@ body {
 }
 
 #language-menu .chevron {
-  transition: transform 150ms ease;
+  transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 #language-menu[open] .chevron {
@@ -98,13 +130,13 @@ details.group[open] .faq-icon {
 }
 
 .faq-icon {
-  transition: transform 150ms ease;
+  transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(16px);
   }
 
   to {

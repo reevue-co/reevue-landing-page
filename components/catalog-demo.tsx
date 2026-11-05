@@ -37,14 +37,13 @@ export function CatalogDemo({ dict }: { dict: Dictionary }) {
 
   return (
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
-      <div className="min-w-0 overflow-hidden rounded-2xl border border-line bg-paper shadow-[0_24px_60px_-36px_rgba(16,42,74,0.4)]">
-        <div className="flex items-center gap-2 border-b border-line bg-[#f7f9fc] px-4 py-3">
-          <span className="size-2.5 rounded-full bg-[#d5deea]" />
-          <span className="size-2.5 rounded-full bg-[#d5deea]" />
-          <span className="size-2.5 rounded-full bg-[#d5deea]" />
-          <span className="ml-2 truncate rounded-md bg-white px-3 py-1 text-xs text-muted ring-1 ring-line">
-            {dict.preview.domain}
-          </span>
+      <div className="min-w-0 rounded-[1.8rem] bg-paper p-2 shadow-[0_30px_80px_-48px_rgba(18,36,72,0.4)] ring-1 ring-line">
+        <div className="overflow-hidden rounded-[1.35rem]">
+        <div className="flex items-center gap-2 px-4 py-3">
+          <span className="size-2 rounded-full bg-line" />
+          <span className="size-2 rounded-full bg-line" />
+          <span className="size-2 rounded-full bg-line" />
+          <span className="ml-2 truncate text-xs text-muted">{dict.preview.domain}</span>
         </div>
 
         <div className="p-4 sm:p-6">
@@ -53,7 +52,7 @@ export function CatalogDemo({ dict }: { dict: Dictionary }) {
               <p className="text-lg font-semibold text-ink">{dict.preview.agency}</p>
               <p className="text-sm text-muted">{dict.preview.agencyLine}</p>
             </div>
-            <p className="rounded-full bg-blue-soft px-3 py-1 text-xs font-semibold text-blue">
+            <p className="text-xs font-medium text-blue">
               {dict.preview.fictional}
             </p>
           </div>
@@ -74,7 +73,7 @@ export function CatalogDemo({ dict }: { dict: Dictionary }) {
                 autoComplete="off"
                 placeholder={dict.preview.searchPlaceholder}
                 onChange={(event) => setQuery(event.target.value)}
-                className="h-12 w-full rounded-xl border border-line bg-white px-4 text-base text-ink outline-none placeholder:text-[#5d6e84]"
+                className="h-12 w-full rounded-2xl bg-background px-4 text-base text-ink outline-none placeholder:text-muted"
               />
             </div>
             <fieldset>
@@ -88,8 +87,8 @@ export function CatalogDemo({ dict }: { dict: Dictionary }) {
                       type="button"
                       aria-pressed={active}
                       onClick={() => setIntent(filter.id)}
-                      className={`min-h-11 rounded-full px-4 text-sm font-semibold ${
-                        active ? "bg-blue text-white" : "bg-blue-soft text-blue hover:bg-[#d7e8f8]"
+                      className={`min-h-11 rounded-full px-4 text-sm font-medium ${
+                        active ? "bg-ink text-background" : "bg-background text-ink hover:bg-line"
                       }`}
                     >
                       {filter.label}
@@ -119,9 +118,10 @@ export function CatalogDemo({ dict }: { dict: Dictionary }) {
 
           {selected ? <PropertyDetail dict={dict} listing={selected} /> : null}
         </div>
+        </div>
       </div>
 
-      <div className="lg:sticky lg:top-24">
+      <div className="lg:sticky lg:top-28">
         <p className="mb-3 text-sm font-semibold text-ink">{dict.demo.mobile}</p>
         <PhoneFrame dict={dict} listing={selected} />
       </div>
@@ -147,8 +147,8 @@ function PropertyButton({
       type="button"
       aria-pressed={pressed}
       onClick={onSelect}
-      className={`w-full rounded-xl border p-2 text-left ${
-        pressed ? "border-blue bg-blue-soft" : "border-line bg-white hover:border-[#b7c6d8]"
+      className={`w-full rounded-2xl p-2 text-left ${
+        pressed ? "bg-blue-soft" : "bg-background hover:bg-line"
       }`}
     >
       <span className="relative block aspect-[4/3] overflow-hidden rounded-lg">
@@ -204,7 +204,7 @@ function PropertyDetail({ dict, listing }: { dict: Dictionary; listing: Listing 
         <button
           type="button"
           disabled
-          className="inline-flex min-h-12 cursor-not-allowed items-center rounded-full bg-[#e4ebf3] px-5 text-sm font-semibold text-muted"
+          className="inline-flex min-h-12 cursor-not-allowed items-center rounded-full bg-background px-5 text-sm font-medium text-muted"
         >
           {dict.preview.whatsapp}
         </button>
@@ -216,8 +216,8 @@ function PropertyDetail({ dict, listing }: { dict: Dictionary; listing: Listing 
 
 function PhoneFrame({ dict, listing }: { dict: Dictionary; listing: Listing | undefined }) {
   return (
-    <div className="mx-auto w-full max-w-[280px] rounded-[2rem] border border-[#1c314c] bg-[#101b2d] p-2 shadow-[0_20px_50px_-28px_rgba(16,27,45,0.7)]">
-      <div className="overflow-hidden rounded-[1.5rem] bg-white">
+    <div className="mx-auto w-full max-w-[280px] rounded-[2rem] bg-line p-2 shadow-[0_24px_50px_-32px_rgba(18,28,48,0.45)]">
+      <div className="overflow-hidden rounded-[1.55rem] bg-paper">
         <div className="flex justify-center py-2">
           <span className="h-1.5 w-14 rounded-full bg-line" />
         </div>
@@ -250,7 +250,7 @@ function PhoneFrame({ dict, listing }: { dict: Dictionary; listing: Listing | un
 
 function Spec({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-background px-3 py-3">
+    <div className="px-1 py-2">
       <dt className="text-xs font-medium text-muted">{label}</dt>
       <dd className="mt-1 text-sm font-semibold text-ink">{value}</dd>
     </div>

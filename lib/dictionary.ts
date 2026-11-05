@@ -35,6 +35,11 @@ export type Dictionary = {
     list: string;
     pt: string;
     es: string;
+    en: string;
+  };
+  theme: {
+    toDark: string;
+    toLight: string;
   };
   form: { unavailable: string; newTab: string };
   hero: {
@@ -139,6 +144,7 @@ export type Dictionary = {
     expansion: string;
     early: string;
     contact: string;
+    social: string;
   };
   notFound: { title: string; text: string };
 };

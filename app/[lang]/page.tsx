@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]">): Promis
           languages: {
             "pt-BR": `${siteUrl}/pt-br`,
             "es-419": `${siteUrl}/es`,
+            en: `${siteUrl}/en`,
             "x-default": `${siteUrl}/pt-br`,
           },
         }

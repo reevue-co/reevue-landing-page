@@ -5,11 +5,11 @@ export function PortalPreview({ dict }: { dict: Dictionary }) {
     <div
       role="img"
       aria-label={`${dict.portal.mockTitle}. ${dict.portal.mockNote}`}
-      className="rounded-2xl border border-line bg-[#f7f9fc] p-4 sm:p-5"
+      className="rounded-[1.8rem] bg-paper p-5 shadow-[0_30px_80px_-48px_rgba(18,36,72,0.4)] ring-1 ring-line sm:p-6"
     >
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-semibold text-ink">{dict.portal.mockTitle}</p>
-        <p className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-blue ring-1 ring-line">
+        <p className="text-xs font-medium text-blue">
           {dict.portal.mockBadge}
         </p>
       </div>
@@ -20,7 +20,7 @@ export function PortalPreview({ dict }: { dict: Dictionary }) {
               <span className="block text-sm font-semibold text-ink">{item.title}</span>
               <span className="block text-xs text-muted">{item.meta}</span>
             </span>
-            <span className="h-10 w-14 shrink-0 rounded-md bg-[#d7e3f0]" />
+            <span className="h-10 w-14 shrink-0 rounded-lg bg-line" />
           </li>
         ))}
       </ul>

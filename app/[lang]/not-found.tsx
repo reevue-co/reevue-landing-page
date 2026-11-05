@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { en } from "@/lib/dictionaries/en";
 import { es } from "@/lib/dictionaries/es";
 import { ptBr } from "@/lib/dictionaries/pt-br";
 
@@ -11,8 +12,11 @@ export default function NotFound() {
       <p className="mt-2 leading-7 text-muted" lang="es-419">
         {es.notFound.text}
       </p>
+      <p className="mt-2 leading-7 text-muted" lang="en">
+        {en.notFound.text}
+      </p>
       <div className="mt-6 flex flex-wrap gap-3">
-        <Link href="/pt-br" className="inline-flex min-h-11 items-center rounded-full bg-blue px-4 text-sm font-semibold text-white">
+        <Link href="/pt-br" className="inline-flex min-h-11 items-center rounded-full bg-blue-solid px-4 text-sm font-semibold text-white">
           Português
         </Link>
         <Link
@@ -22,6 +26,14 @@ export default function NotFound() {
           className="inline-flex min-h-11 items-center rounded-full border border-line bg-paper px-4 text-sm font-semibold text-ink"
         >
           Español
+        </Link>
+        <Link
+          href="/en"
+          lang="en"
+          hrefLang="en"
+          className="inline-flex min-h-11 items-center rounded-full border border-line bg-paper px-4 text-sm font-semibold text-ink"
+        >
+          English
         </Link>
       </div>
     </main>

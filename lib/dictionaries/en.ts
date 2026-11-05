@@ -1,0 +1,340 @@
+import type { Dictionary } from "@/lib/dictionary";
+
+export const en = {
+  meta: {
+    title: "Reevue | Agency websites and property catalogs",
+    description:
+      "Reevue is in development for agencies that need to present their brand, organize sales and rentals, and keep the catalog up to date. Register your interest in early access.",
+  },
+  a11y: {
+    skip: "Skip to content",
+  },
+  nav: {
+    primary: "On this page",
+    mobile: "Menu",
+    menu: "Menu",
+    problem: "The problem",
+    product: "Product",
+    features: "Features",
+    portal: "Portal",
+    faq: "Questions",
+    cta: "I want to join",
+  },
+  language: {
+    choose: "Choose language",
+    current: "Current language",
+    list: "Available languages",
+    pt: "Português",
+    es: "Español",
+    en: "English",
+  },
+  theme: {
+    toDark: "Use dark theme",
+    toLight: "Use light theme",
+  },
+  form: {
+    unavailable: "Registration available soon",
+    newTab: "Opens in a new tab",
+  },
+  hero: {
+    title: "Your agency grew. Did your website keep up?",
+    description:
+      "Present your properties on a site that matches your brand. We are building Reevue to bring your sale and rental catalog together, make updates easier, and connect each property to your client conversations.",
+    primary: "I want to refresh my digital presence",
+    secondary: "See how it will work",
+    support: "In development. Register your interest in early access.",
+  },
+  problem: {
+    title: "You invest to earn attention. What does the client find next?",
+    intro: "Not every agency runs into this. When it happens, interest arrives and the presentation does not keep up.",
+    items: [
+      {
+        title: "A website that is hard to use on a phone",
+        text: "Someone opens the link on the way and finds pages that are difficult to browse, cropped photos, and no clear path to the property.",
+      },
+      {
+        title: "A catalog that takes too much effort to update",
+        text: "Adding, removing, or correcting a listing depends on someone else, an old file, or a process that cannot keep up with the portfolio.",
+      },
+      {
+        title: "Photos and details scattered around",
+        text: "Price, photos, and details move through messages and posts. The next person has to piece the property together.",
+      },
+    ],
+    closing: "Your catalog deserves a presentation that matches the properties you sell.",
+  },
+  value: {
+    title: "Your brand. Your properties. One address for all of it.",
+    status: "Intended benefits of the product in development",
+    intro:
+      "The first version of Reevue is being designed so the agency has its own address, with its own brand, where the sale and rental portfolio can be viewed, shared, and updated.",
+    points: [
+      {
+        title: "A website with the agency’s brand",
+        text: "The agency’s name, logo, and colors on the address where clients see the properties.",
+      },
+      {
+        title: "Sales and rentals in one catalog",
+        text: "Listings organized for people looking to buy and people looking to rent.",
+      },
+      {
+        title: "Information that is easy to browse and share",
+        text: "Price, photos, neighborhood, and features gathered on a page that can be sent to someone.",
+      },
+      {
+        title: "WhatsApp tied to the selected property",
+        text: "The conversation starts from the listing, with the property identified.",
+      },
+      {
+        title: "Freedom to update the catalog",
+        text: "The team publishes and adjusts listings without depending on a website stuck in time.",
+      },
+    ],
+  },
+  demo: {
+    title: "A property page you can actually show.",
+    text: "The preview below shows the direction of the product: the agency page, sale and rental listings, the property details, and a phone view. Search and filters work only in this demonstration.",
+    disclaimer: "Leme and the properties are fictional. They are not clients or real listings.",
+    cta: "I want a site like this for my agency",
+    mobile: "Phone view",
+    mobileEmpty: "Choose a property in the preview to see its details.",
+  },
+  preview: {
+    domain: "leme.example",
+    agency: "Leme Real Estate",
+    agencyLine: "Sales and rentals",
+    bannerTitle: "Leme’s portfolio, at one address.",
+    bannerText: "Visual example of a homepage. Fictional brand.",
+    heroCaption:
+      "Illustrative preview of an agency website. The agency and the properties are fictional. Photos under the Unsplash license.",
+    filters: {
+      all: "All",
+      sale: "Sale",
+      rent: "Rent",
+    },
+    filterLegend: "Filter the preview by listing type",
+    searchLabel: "Search the preview",
+    searchPlaceholder: "Neighborhood or property type",
+    empty: "No illustrative property in this filter.",
+    whatsapp: "WhatsApp for this property",
+    whatsappNote: "Illustrative button. It does not send a message.",
+    fictional: "Fictional data, used only to show the product.",
+    photoCredit: "Illustrative photos under the Unsplash license.",
+    gallery: "Illustrative gallery",
+    galleryAlt: "Illustrative interior photo, included only in this preview.",
+    specs: {
+      price: "Price",
+      neighborhood: "Neighborhood",
+      area: "Area",
+      bedrooms: "Bedrooms",
+      parking: "Parking",
+    },
+    intent: {
+      sale: "Sale",
+      rent: "Rent",
+    },
+  },
+  listings: [
+    {
+      id: "apt",
+      intent: "sale",
+      title: "Apartment with a balcony",
+      neighborhood: "Pinheiros",
+      price: "R$ 890,000",
+      area: "78 m²",
+      bedrooms: "2",
+      bedroomsLabel: "2 bedrooms",
+      parking: "1",
+      parkingLabel: "1 parking space",
+      image: "living",
+      photoAlt: "Bright living room, illustrative property photo",
+    },
+    {
+      id: "house",
+      intent: "rent",
+      title: "House on a tree-lined street",
+      neighborhood: "Vila Mariana",
+      price: "R$ 6,400/month",
+      area: "142 m²",
+      bedrooms: "3",
+      bedroomsLabel: "3 bedrooms",
+      parking: "2",
+      parkingLabel: "2 parking spaces",
+      image: "house",
+      photoAlt: "Contemporary house facade, illustrative property photo",
+    },
+    {
+      id: "studio",
+      intent: "sale",
+      title: "Renovated studio",
+      neighborhood: "Moema",
+      price: "R$ 515,000",
+      area: "36 m²",
+      bedrooms: "1",
+      bedroomsLabel: "1 bedroom",
+      parking: "1",
+      parkingLabel: "1 parking space",
+      image: "bedroom",
+      photoAlt: "Bedroom with natural light, illustrative property photo",
+    },
+  ],
+  features: {
+    title: "The essentials to put your portfolio forward.",
+    intro: "These features are planned for launch. They are not available yet.",
+    planned: "Planned for launch",
+    badge: "Planned",
+    items: [
+      {
+        title: "Responsive website",
+        detail: "Pages for phone, tablet, and computer.",
+      },
+      {
+        title: "Custom domain",
+        detail: "An address for the agency, separate from the portal.",
+      },
+      {
+        title: "Agency logo and colors",
+        detail: "The agency’s brand leads the presentation.",
+      },
+      {
+        title: "Sale and rental listings",
+        detail: "Both types of business in the same catalog.",
+      },
+      {
+        title: "Photo galleries",
+        detail: "More than one image per property.",
+      },
+      {
+        title: "Search and filters",
+        detail: "Find listings by type and main features.",
+      },
+      {
+        title: "WhatsApp from the property",
+        detail: "The contact carries the context of the chosen listing.",
+      },
+      {
+        title: "Catalog management panel",
+        detail: "The team updates listings on its own.",
+      },
+    ],
+  },
+  how: {
+    title: "Three steps to publish the catalog.",
+    note: "This is the intended order of use. There is no promise of instant setup or a specific time to finish.",
+    steps: [
+      {
+        title: "Set up your agency’s brand",
+        text: "Name, logo, and colors go on the site the client will visit.",
+      },
+      {
+        title: "Add and organize properties",
+        text: "Sales and rentals, photos, and the main details stay in one catalog.",
+      },
+      {
+        title: "Publish and share the catalog",
+        text: "The agency’s address can be sent to anyone who wants to see the portfolio.",
+      },
+    ],
+  },
+  expansion: {
+    title: "What may come later, with the agencies that take part.",
+    intro:
+      "These features are planned and are not part of the first version. The order will follow what participating agencies mark as a priority.",
+    badge: "Planned",
+    note: "Financing estimates do not mean a confirmed bank integration or a financial partnership.",
+    items: [
+      {
+        title: "CRM and inquiry tracking",
+        text: "Record and follow up with people who got in touch from a property.",
+      },
+      {
+        title: "AI-assisted client conversations",
+        text: "Help answering questions with the catalog as context.",
+      },
+      {
+        title: "Contract management",
+        text: "Follow contracts tied to the agency’s operation.",
+      },
+      {
+        title: "Due dates and overdue payments",
+        text: "See due dates and outstanding payments.",
+      },
+      {
+        title: "AI-generated property videos",
+        text: "Build a presentation video from the property’s material.",
+      },
+      {
+        title: "Financing estimates",
+        text: "Estimate financing conditions for someone who is buying.",
+      },
+    ],
+  },
+  portal: {
+    kicker: "Complementary product, in planning",
+    title: "A portal to widen distribution, when it makes sense.",
+    text: "Besides the agency website, Reevue plans a listing portal. Publication will be authorized by the agency. Paid listings and featured placements are planned as promotion options.",
+    points: [
+      "The agency decides what can be published.",
+      "Nothing goes on the portal without that consent.",
+      "Paid promotion is a planned option, not a guarantee of visits, inquiries, or sales.",
+    ],
+    mockTitle: "Reevue Portal",
+    mockBadge: "Planned feature",
+    mockNote: "Publication only with the agency’s authorization.",
+    mockItems: [
+      { title: "Apartment with a balcony", meta: "Sale · Pinheiros" },
+      { title: "House on a tree-lined street", meta: "Rent · Vila Mariana" },
+    ],
+  },
+  early: {
+    title: "Does your agency need this change? Let’s talk.",
+    description:
+      "Register your interest, tell us what you need, and join the conversations that will shape the first version of Reevue.",
+    cta: "I want to take part",
+    support: "You will be sent to a short interest form.",
+  },
+  faq: {
+    title: "Questions",
+    items: [
+      {
+        question: "Is Reevue available?",
+        answer:
+          "Reevue is in development. Registration lets you receive updates and be contacted about the first tests.",
+      },
+      {
+        question: "Who is it for?",
+        answer: "Agencies that are creating or replacing their website and want to organize how they promote properties.",
+      },
+      {
+        question: "Can agencies use their own branding and domain?",
+        answer: "That is planned for the first release.",
+      },
+      {
+        question: "Can agencies that already have a website take part?",
+        answer: "Yes. Agencies that already have a website can register their interest.",
+      },
+      {
+        question: "What does it cost?",
+        answer: "Plans and pricing are still being defined.",
+      },
+      {
+        question: "When will it launch?",
+        answer: "There is no confirmed date yet.",
+      },
+    ],
+  },
+  footer: {
+    description: "Websites and catalogs for real estate agencies. Product in development.",
+    status: "In development. No launch date yet.",
+    nav: "On this page",
+    how: "How it will work",
+    expansion: "After launch",
+    early: "Early access",
+    contact: "Contact",
+    social: "Social",
+  },
+  notFound: {
+    title: "Page not found",
+    text: "This address does not exist. Choose a language to return to Reevue.",
+  },
+} satisfies Dictionary;

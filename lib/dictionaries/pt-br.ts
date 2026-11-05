@@ -26,6 +26,11 @@ export const ptBr = {
     list: "Idiomas disponíveis",
     pt: "Português",
     es: "Español",
+    en: "English",
+  },
+  theme: {
+    toDark: "Usar tema escuro",
+    toLight: "Usar tema claro",
   },
   form: {
     unavailable: "Cadastro disponível em breve",
@@ -330,6 +335,7 @@ export const ptBr = {
     expansion: "Depois do lançamento",
     early: "Acesso antecipado",
     contact: "Contato",
+    social: "Redes sociais",
   },
   notFound: {
     title: "Página não encontrada",
