@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Reevue
 
-## Getting Started
+Landing page da Reevue em português do Brasil (`/pt-br`) e espanhol latino-americano (`/es`). A raiz `/` redireciona para `/pt-br`.
 
-First, run the development server:
+## Rodar localmente
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000). O servidor redireciona para `/pt-br`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para simular os formulários, copie `.env.example` para `.env.local` e preencha as URLs.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+npm start
+```
 
-## Learn More
+## Editar traduções
 
-To learn more about Next.js, take a look at the following resources:
+Os textos visíveis ficam nos dicionários tipados:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `lib/dictionaries/pt-br.ts`
+- `lib/dictionaries/es.ts`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+O tipo compartilhado está em `lib/dictionary.ts`. Uma chave nova precisa existir nos dois idiomas, senão o TypeScript acusa o erro. Componentes reutilizam esses dicionários; não espalhe frases soltas pela interface.
 
-## Deploy on Vercel
+## Configurar o Google Forms
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Defina as variáveis públicas:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `NEXT_PUBLIC_GOOGLE_FORM_URL_PT`
+- `NEXT_PUBLIC_GOOGLE_FORM_URL_ES`
+
+As duas podem usar a mesma URL. Todos os botões de acesso antecipado abrem o formulário do idioma atual em uma nova aba. Se a variável estiver vazia ou não for um endereço `http`/`https`, o botão deixa de navegar e mostra o aviso de cadastro em breve. Não há integração direta com planilhas.
+
+## Publicar na Vercel
+
+1. Importe o repositório na Vercel.
+2. Confirme o framework Next.js. O comando de build é `npm run build`.
+3. Em Settings → Environment Variables, adicione as variáveis do `.env.example` para Production e Preview.
+4. Faça o deploy pelo painel da Vercel.
+
+Este repositório não dispara deploy automático a partir daqui.
+
+## Antes do lançamento
+
+- Definir `NEXT_PUBLIC_SITE_URL` com o domínio real, em `https`, para publicar canonical, Open Graph absoluto, hreflang e sitemap.
+- Conferir os dois links de formulário e o texto de confirmação do Google Forms.
+- Incluir e-mail ou redes sociais apenas se os endereços forem reais. Sem valor, o rodapé não mostra contato.
+- Revisar a cópia quando houver data de lançamento, preço ou recursos disponíveis. A página deixa explícito que a Reevue está em desenvolvimento.
+- As fotos de imóvel são ilustrativas, da licença do Unsplash, e não representam clientes.
+
+## Rotas
+
+| Caminho | Idioma |
+| --- | --- |
+| `/` | Redireciona para `/pt-br` |
+| `/pt-br` | Português do Brasil (`pt-BR`) |
+| `/es` | Espanhol latino-americano (`es-419`) |

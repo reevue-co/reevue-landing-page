@@ -1,9 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   experimental: {
     agentFeedback: true,
+    globalNotFound: true,
+  },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/pt-br",
+        permanent: false,
+      },
+    ];
   },
   cacheComponents: true,
   partialPrefetching: true,
