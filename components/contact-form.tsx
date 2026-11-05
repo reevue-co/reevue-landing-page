@@ -1,14 +1,15 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
-import { PiCaretDownBold } from "react-icons/pi";
+import { useActionState, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { PiArrowLeftBold, PiArrowRightBold, PiCaretDownBold } from "react-icons/pi";
 import { countries, hasSiteOptions, interests, profiles, solutions, type ContactState } from "@/lib/contact";
 import { submitContact } from "@/lib/contact-action";
+import { caretForDigitCount, formatPhone, phoneExample, phonePattern } from "@/lib/phone-mask";
 import type { Dictionary } from "@/lib/dictionary";
 import { htmlLang, type Locale } from "@/lib/i18n";
 
 const input =
-  "min-h-12 w-full rounded-xl border border-line bg-paper px-3 text-base text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue";
+  "min-h-12 w-full rounded-xl border border-line bg-background px-3 text-base text-ink placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue";
 const label = "grid gap-1.5 text-sm font-medium";
 const initial: ContactState = { status: "idle", fields: {} };
 const defaultCountry = { "pt-br": "BR", es: "MX", en: "US" } as const;
@@ -19,15 +20,78 @@ export function ContactForm({ locale, dict }: { locale: Locale; dict: Dictionary
   const v = state.fields;
   const [country, setCountry] = useState(v.country || defaultCountry[locale]);
   const [dial, setDial] = useState(v.dial || dialOf(country));
+  const [phone, setPhone] = useState(() => formatPhone(v.phone ?? "", v.dial || dialOf(v.country || defaultCountry[locale])));
   const [profile, setProfile] = useState(v.profile ?? "");
   const [hasSite, setHasSite] = useState(v.hasSite ?? "");
+  const [step, setStep] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const phoneCaret = useRef<number | null>(null);
+
+  useLayoutEffect(() => {
+    const field = phoneRef.current;
+    if (!field || phoneCaret.current == null) return;
+    const position = caretForDigitCount(phone, phoneCaret.current);
+    field.setSelectionRange(position, position);
+    phoneCaret.current = null;
+  }, [phone]);
+
+  function changeDial(code: string) {
+    setDial(code);
+    setPhone((current) => formatPhone(current, code));
+  }
+
+  function onPhoneChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const field = event.target;
+    field.setCustomValidity("");
+    phoneCaret.current = field.value.slice(0, field.selectionStart ?? field.value.length).replace(/\D/g, "").length;
+    setPhone(formatPhone(field.value, dial));
+  }
 
   const message = useRef<HTMLParagraphElement>(null);
-  // On success the form shrinks, so show the whole section (title + message); errors scroll to the alert.
   useEffect(() => {
-    if (state.status === "ok") document.getElementById("acesso")?.scrollIntoView({ block: "start" });
-    else if (state.status !== "idle") message.current?.scrollIntoView({ block: "start" });
-  }, [state]);
+    if (state.status === "idle") return;
+    if (state.status === "invalid") {
+      const general =
+        v.name.trim().length < 2 ||
+        !profiles.includes(v.profile as (typeof profiles)[number]) ||
+        v.phone.replace(/\D/g, "").length < 6 ||
+        (v.profile === "agency" && v.agencyName.trim().length < 2);
+      const location = v.state.trim().length < 2 || v.city.trim().length < 2;
+      setStep(general ? 0 : location ? 1 : 2);
+    }
+    message.current?.scrollIntoView({ block: "nearest" });
+  }, [state, v]);
+
+  function showStep(nextStep: number) {
+    setStep(nextStep);
+    formRef.current?.closest("[data-contact-scroll]")?.scrollTo({ top: 0 });
+  }
+
+  function nextStep() {
+    const form = formRef.current;
+    if (!form) return;
+
+    const field = phoneRef.current;
+    if (field && step === 0) {
+      const formatted = formatPhone(field.value, dial);
+      field.value = formatted;
+      setPhone(formatted);
+      const complete = new RegExp(`^(?:${phonePattern(dial)})$`).test(formatted);
+      field.setCustomValidity(complete ? "" : dict.form.phoneInvalid);
+    }
+
+    const invalid = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>("input, select, textarea")].find(
+      (el) => el.name !== "hp" && !el.closest("[hidden]") && !el.checkValidity(),
+    );
+    if (invalid) {
+      invalid.reportValidity();
+      invalid.focus();
+      return;
+    }
+
+    showStep(step + 1);
+  }
 
   const f = dict.form;
   const regions = new Intl.DisplayNames([htmlLang[locale]], { type: "region" });
@@ -40,7 +104,7 @@ export function ContactForm({ locale, dict }: { locale: Locale; dict: Dictionary
 
   if (state.status === "ok") {
     return (
-      <p ref={message} role="status" className="scroll-mt-28 rounded-2xl bg-paper p-6 text-base font-medium text-ink">
+      <p ref={message} role="status" className="text-base font-medium text-ink">
         {f.success}
       </p>
     );
@@ -86,27 +150,63 @@ export function ContactForm({ locale, dict }: { locale: Locale; dict: Dictionary
     </fieldset>
   );
 
+  const steps = [f.stepGeneral, f.stepLocation, f.stepInterest];
+
   return (
-    <form action={action} className="grid gap-5 rounded-2xl bg-paper p-5 text-ink sm:p-7">
+    <form ref={formRef} action={action} className="grid gap-5 text-ink">
       <input type="hidden" name="locale" value={locale} />
       {/* Honeypot: hidden from people, bots fill it. */}
       <input type="text" name="hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
 
+      <ol aria-label={f.steps} className="grid grid-cols-3 gap-3">
+        {steps.map((title, index) => (
+          <li key={title} aria-current={index === step ? "step" : undefined}>
+            <p className={`text-sm font-medium ${index === step ? "text-ink" : index < step ? "text-blue" : "text-muted"}`}>
+              {title}
+            </p>
+            <span className={`mt-2 block h-0.5 rounded-full ${index <= step ? "bg-blue" : "bg-line"}`} />
+          </li>
+        ))}
+      </ol>
+
+      <div hidden={step !== 0}>
+        <div className="grid gap-5">
       <label className={label}>
         {f.name}
-        <input name="name" required minLength={2} maxLength={100} autoComplete="name" defaultValue={v.name} className={input} />
+        <input
+          name="name"
+          required={step === 0}
+          minLength={2}
+          maxLength={100}
+          autoComplete="name"
+          placeholder={f.namePlaceholder}
+          defaultValue={v.name}
+          className={input}
+        />
       </label>
 
-      {radios("profile", f.profile, profiles, { required: true, value: profile, onChange: setProfile })}
+      {radios("profile", f.profile, profiles, { required: step === 0, value: profile, onChange: setProfile })}
 
       {profile === "agency" && (
         <label className={label}>
           {f.agencyName}
-          <input name="agencyName" required minLength={2} maxLength={120} autoComplete="organization" defaultValue={v.agencyName} className={input} />
+          <input
+            name="agencyName"
+            required={step === 0}
+            minLength={2}
+            maxLength={120}
+            autoComplete="organization"
+            placeholder={f.agencyPlaceholder}
+            defaultValue={v.agencyName}
+            className={input}
+          />
         </label>
       )}
+        </div>
+      </div>
 
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div hidden={step !== 1}>
+        <div className="grid gap-5 sm:grid-cols-3">
         <label className={label}>
           {f.country}
           {select(
@@ -114,7 +214,7 @@ export function ContactForm({ locale, dict }: { locale: Locale; dict: Dictionary
             country,
             (iso) => {
               setCountry(iso);
-              setDial(dialOf(iso)); // the dial code follows the country, but stays editable
+              changeDial(dialOf(iso));
             },
             countries.map(([iso]) => (
               <option key={iso} value={iso}>
@@ -125,87 +225,169 @@ export function ContactForm({ locale, dict }: { locale: Locale; dict: Dictionary
         </label>
         <label className={label}>
           {f.state}
-          <input name="state" required minLength={2} maxLength={80} autoComplete="address-level1" defaultValue={v.state} className={input} />
+          <input
+            name="state"
+            required={step === 1}
+            minLength={2}
+            maxLength={80}
+            autoComplete="address-level1"
+            placeholder={f.statePlaceholder}
+            defaultValue={v.state}
+            className={input}
+          />
         </label>
         <label className={label}>
           {f.city}
-          <input name="city" required minLength={2} maxLength={80} autoComplete="address-level2" defaultValue={v.city} className={input} />
+          <input
+            name="city"
+            required={step === 1}
+            minLength={2}
+            maxLength={80}
+            autoComplete="address-level2"
+            placeholder={f.cityPlaceholder}
+            defaultValue={v.city}
+            className={input}
+          />
         </label>
+        </div>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-        <label className={label}>
-          {f.dial}
-          {select(
-            "dial",
-            dial,
-            setDial,
-            countries.map(([iso, code]) => (
-              <option key={iso} value={code}>
-                {regions.of(iso)} (+{code})
-              </option>
-            )),
+      <div hidden={step !== 0}>
+        <div className="grid gap-5">
+          <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+            <label className={label}>
+              {f.dial}
+              {select(
+                "dial",
+                dial,
+                changeDial,
+                countries.map(([iso, code]) => (
+                  <option key={iso} value={code}>
+                    {regions.of(iso)} (+{code})
+                  </option>
+                )),
+              )}
+            </label>
+            <label className={label}>
+              {f.phone}
+              <input
+                ref={phoneRef}
+                name="phone"
+                type="tel"
+                required={step === 0}
+                onBlur={onPhoneChange}
+                inputMode="tel"
+                autoComplete="tel-national"
+                pattern={phonePattern(dial)}
+                placeholder={phoneExample(dial)}
+                value={phone}
+                onChange={onPhoneChange}
+                className={input}
+              />
+            </label>
+          </div>
+
+          <label className={label}>
+            {f.email} <span className="font-normal text-muted">{f.optional}</span>
+            <input
+              name="email"
+              type="email"
+              maxLength={254}
+              pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+              autoComplete="email"
+              placeholder={f.emailPlaceholder}
+              defaultValue={v.email}
+              className={input}
+            />
+          </label>
+        </div>
+      </div>
+
+      <div hidden={step !== 2}>
+        <div className="grid gap-5">
+          {radios("interest", f.interest, interests, { required: step === 2 })}
+          {radios("solution", f.solution, solutions, { required: step === 2 })}
+          {radios("hasSite", `${f.hasSite} ${f.optional}`, hasSiteOptions, { required: false, value: hasSite, onChange: setHasSite })}
+
+          {hasSite === "yes" && (
+            <label className={label}>
+              {f.site}
+              <input
+                name="site"
+                required={step === 2}
+                inputMode="url"
+                maxLength={300}
+                placeholder={f.sitePlaceholder}
+                pattern="\S+\.\S+"
+                autoComplete="url"
+                defaultValue={v.site}
+                className={input}
+              />
+            </label>
           )}
-        </label>
-        <label className={label}>
-          {f.phone}
-          <input
-            name="phone"
-            type="tel"
-            required
-            inputMode="tel"
-            autoComplete="tel-national"
-            pattern="[0-9 ()\-]{6,20}"
-            defaultValue={v.phone}
-            className={input}
-          />
-        </label>
+
+          <label className={label}>
+            {f.difficulty} <span className="font-normal text-muted">{f.optional}</span>
+            <textarea
+              name="difficulty"
+              rows={3}
+              maxLength={500}
+              placeholder={f.difficultyPlaceholder}
+              defaultValue={v.difficulty}
+              className={`${input} py-3`}
+            />
+          </label>
+        </div>
       </div>
 
-      <label className={label}>
-        {f.email} <span className="font-normal text-muted">{f.optional}</span>
-        <input name="email" type="email" maxLength={254} pattern="[^\s@]+@[^\s@]+\.[^\s@]+" autoComplete="email" defaultValue={v.email} className={input} />
-      </label>
-
-      {radios("interest", f.interest, interests, { required: true })}
-      {radios("solution", f.solution, solutions, { required: true })}
-      {radios("hasSite", `${f.hasSite} ${f.optional}`, hasSiteOptions, { required: false, value: hasSite, onChange: setHasSite })}
-
-      {hasSite === "yes" && (
-        <label className={label}>
-          {f.site}
-          <input
-            name="site"
-            required
-            inputMode="url"
-            maxLength={300}
-            placeholder={f.sitePlaceholder}
-            pattern="\S+\.\S+"
-            autoComplete="url"
-            defaultValue={v.site}
-            className={input}
-          />
-        </label>
-      )}
-
-      <label className={label}>
-        {f.difficulty} <span className="font-normal text-muted">{f.optional}</span>
-        <textarea name="difficulty" rows={3} maxLength={500} defaultValue={v.difficulty} className={`${input} py-3`} />
+      <label className="flex items-start gap-3 rounded-xl bg-background px-4 py-3 text-sm leading-6 text-ink">
+        <input
+          name="consent"
+          type="checkbox"
+          value="yes"
+          required={step === 2}
+          defaultChecked={v.consent === "yes"}
+          className="mt-1 size-4 shrink-0 accent-blue-solid"
+        />
+        <span>{dict.early.support}</span>
       </label>
 
       {(state.status === "invalid" || state.status === "error") && (
-        <p ref={message} role="alert" className="scroll-mt-28 text-sm font-medium text-red-700">
+        <p ref={message} role="alert" className="text-sm font-medium text-red-700">
           {state.status === "invalid" ? f.errorInvalid : f.errorSend}
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="inline-flex min-h-12 items-center justify-center rounded-full bg-blue px-5 py-3 text-sm font-semibold text-white hover:bg-[#082f69] disabled:opacity-60"
-      >
-        {pending ? f.sending : f.submit}
-      </button>
+      <div className="flex gap-3">
+        {step > 0 && (
+          <button
+            type="button"
+            onClick={() => showStep(step - 1)}
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-line px-5 text-sm font-semibold text-ink hover:bg-background"
+          >
+            <PiArrowLeftBold aria-hidden="true" className="size-4" />
+            {f.back}
+          </button>
+        )}
+        {step < 2 ? (
+          <button
+            type="button"
+            onClick={nextStep}
+            className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-blue-solid px-5 py-3 text-sm font-semibold text-white hover:brightness-110"
+          >
+            {f.next}
+            <PiArrowRightBold aria-hidden="true" className="size-4" />
+          </button>
+        ) : (
+          <button
+            type="submit"
+            disabled={pending}
+            className="inline-flex min-h-12 flex-1 items-center justify-center rounded-full bg-blue-solid px-5 py-3 text-sm font-semibold text-white hover:brightness-110 disabled:opacity-60"
+          >
+            {pending ? f.sending : f.submit}
+          </button>
+        )}
+      </div>
     </form>
   );
 }

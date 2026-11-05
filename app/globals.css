@@ -132,6 +132,28 @@ details.group[open] .faq-icon {
   transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
+.contact-dialog {
+  width: min(42rem, calc(100% - 1.5rem));
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}
+
+.contact-dialog::backdrop {
+  background: rgb(12 16 24 / 0.62);
+  backdrop-filter: blur(8px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-dialog[open] {
+    animation: rise 280ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;

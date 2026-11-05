@@ -1,4 +1,6 @@
-import { DismissLink } from "@/components/dismiss-link";
+"use client";
+
+import { openContactDialog } from "@/components/contact-modal";
 
 type EarlyAccessLinkProps = {
   label: string;
@@ -21,18 +23,23 @@ export function EarlyAccessLink({
 }: EarlyAccessLinkProps) {
   const shape =
     variant === "nav"
-      ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-full font-semibold"
-      : "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-sm font-semibold leading-tight sm:whitespace-nowrap";
+      ? "inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border-0 font-sans font-semibold"
+      : "inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border-0 px-5 py-3 text-center font-sans text-sm font-semibold leading-tight sm:whitespace-nowrap";
   const classes = `${shape} ${available[variant]} motion-safe:transition-[transform,background-color] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:active:scale-[0.98] ${className}`;
 
-  // The mobile menu must close when the link scrolls to the form.
-  return detailsId ? (
-    <DismissLink href="#acesso" detailsId={detailsId} className={classes}>
+  return (
+    <button
+      type="button"
+      className={classes}
+      onClick={() => {
+        if (detailsId) {
+          const menu = document.getElementById(detailsId) as HTMLDetailsElement | null;
+          if (menu) menu.open = false;
+        }
+        openContactDialog();
+      }}
+    >
       {label}
-    </DismissLink>
-  ) : (
-    <a href="#acesso" className={classes}>
-      {label}
-    </a>
+    </button>
   );
 }

@@ -22,7 +22,7 @@ export async function submitContact(_prev: ContactState, data: FormData): Promis
   const fields = Object.fromEntries(
     [
       "name", "profile", "agencyName", "country", "dial", "state", "city", "phone", "email",
-      "interest", "solution", "hasSite", "site", "difficulty", "locale",
+      "interest", "solution", "hasSite", "site", "difficulty", "locale", "consent",
     ].map((k) => [k, text(data, k)]),
   );
   const invalid: ContactState = { status: "invalid", fields };
@@ -51,6 +51,7 @@ export async function submitContact(_prev: ContactState, data: FormData): Promis
     (!fields.hasSite || oneOf(hasSiteOptions, fields.hasSite)) &&
     site !== null && (site ?? "").length <= 300 &&
     fields.difficulty.length <= 500 &&
+    fields.consent === "yes" &&
     hasLocale(fields.locale);
   if (!valid) return invalid;
 
@@ -79,6 +80,7 @@ export async function submitContact(_prev: ContactState, data: FormData): Promis
         hasSite: fields.hasSite,
         site: site ?? "",
         difficulty: fields.difficulty,
+        consent: true,
         locale: fields.locale,
       }),
       signal: AbortSignal.timeout(10_000),

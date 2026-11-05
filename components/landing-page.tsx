@@ -15,7 +15,7 @@ import {
   PiWhatsappLogoDuotone,
 } from "react-icons/pi";
 import { CatalogDemo } from "@/components/catalog-demo";
-import { ContactForm } from "@/components/contact-form";
+import { ContactModal } from "@/components/contact-modal";
 import { EarlyAccessLink } from "@/components/early-access-link";
 import { HeroPreview } from "@/components/hero-preview";
 import { PortalPreview } from "@/components/portal-preview";
@@ -55,7 +55,7 @@ export function LandingPage({ locale, dict }: { locale: Locale; dict: Dictionary
   const socials = getSocialLinks();
 
   return (
-    <>
+    <ContactModal locale={locale} dict={dict}>
       <SetHtmlLang lang={htmlLang[locale]} />
       <a href="#conteudo" className="skip-link">
         {dict.a11y.skip}
@@ -70,11 +70,11 @@ export function LandingPage({ locale, dict }: { locale: Locale; dict: Dictionary
         <HowItWorks dict={dict} />
         <Expansion dict={dict} />
         <Portal dict={dict} />
-        <EarlyAccess locale={locale} dict={dict} />
+        <EarlyAccess dict={dict} />
         <Faq dict={dict} />
       </main>
       <Footer dict={dict} email={email} socials={socials} />
-    </>
+    </ContactModal>
   );
 }
 
@@ -297,19 +297,18 @@ function Portal({ dict }: { dict: Dictionary }) {
   );
 }
 
-function EarlyAccess({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+function EarlyAccess({ dict }: { dict: Dictionary }) {
   return (
     <section id="acesso" className="scroll-mt-[4.25rem] py-4 sm:py-6">
       <div className={shell}>
-        <div className="overflow-hidden rounded-[2rem] bg-panel px-6 py-10 text-panel-fg sm:px-12 sm:py-12">
-          <h2 className="max-w-2xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] sm:text-5xl">
-            {dict.early.title}
-          </h2>
-          <p className="mt-5 max-w-xl text-pretty text-base leading-7 text-white/75 sm:text-lg">{dict.early.description}</p>
-          <div className="mt-8 max-w-2xl">
-            <ContactForm locale={locale} dict={dict} />
+        <div className="flex flex-col items-start gap-6 rounded-[2rem] bg-panel px-6 py-10 text-panel-fg sm:px-12 sm:py-12 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-xl">
+            <h2 className="text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] sm:text-4xl">
+              {dict.early.title}
+            </h2>
+            <p className="mt-4 text-pretty text-base leading-7 text-white/75">{dict.early.description}</p>
           </div>
-          <p className="mt-4 text-sm text-white/60">{dict.early.support}</p>
+          <EarlyAccessLink label={dict.nav.cta} variant="inverse" className="shrink-0" />
         </div>
       </div>
     </section>
