@@ -19,21 +19,6 @@ export function getSiteUrl(): string | null {
   return new URL(url).origin;
 }
 
-export function getFormUrl(locale: Locale): string | null {
-  const specific =
-    locale === "pt-br"
-      ? process.env.NEXT_PUBLIC_GOOGLE_FORM_URL_PT
-      : locale === "es"
-        ? process.env.NEXT_PUBLIC_GOOGLE_FORM_URL_ES
-        : process.env.NEXT_PUBLIC_GOOGLE_FORM_URL_EN;
-
-  return (
-    httpUrl(specific) ??
-    httpUrl(process.env.NEXT_PUBLIC_GOOGLE_FORM_URL_PT) ??
-    httpUrl(process.env.NEXT_PUBLIC_GOOGLE_FORM_URL_ES)
-  );
-}
-
 const googleAnalyticsId = /^G-[A-Z0-9]+$/;
 
 export function getGoogleAnalyticsId(): string | null {

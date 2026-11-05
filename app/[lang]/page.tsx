@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LandingPage } from "@/components/landing-page";
 import { getDictionary } from "@/lib/get-dictionary";
-import { hasLocale } from "@/lib/i18n";
+import { hasLocale, htmlLang } from "@/lib/i18n";
 import { absoluteLocaleUrl, getSiteUrl, openGraphLocale } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
@@ -49,5 +49,21 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
 
-  return <LandingPage locale={lang} dict={getDictionary(lang)} />;
+  const dict = getDictionary(lang);
+  const siteUrl = getSiteUrl();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", name: "Reevue", description: dict.meta.description, ...(siteUrl ? { url: siteUrl } : {}) },
+      { "@type": "WebSite", name: "Reevue", inLanguage: htmlLang[lang], ...(siteUrl ? { url: absoluteLocaleUrl(lang) } : {}) },
+    ],
+  };
+
+  return (
+    <>
+      {/* "<" is escaped so page text can never close the script tag. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <LandingPage locale={lang} dict={dict} />
+    </>
+  );
 }

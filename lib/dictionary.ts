@@ -41,7 +41,41 @@ export type Dictionary = {
     toDark: string;
     toLight: string;
   };
-  form: { unavailable: string; newTab: string };
+  form: {
+    newTab: string;
+    name: string;
+    profile: string;
+    profileAgency: string;
+    profileIndependent: string;
+    profileAgent: string;
+    profileOwner: string;
+    agencyName: string;
+    country: string;
+    dial: string;
+    state: string;
+    city: string;
+    phone: string;
+    email: string;
+    optional: string;
+    interest: string;
+    interestRent: string;
+    interestSale: string;
+    solution: string;
+    solutionPortal: string;
+    solutionSite: string;
+    solutionBoth: string;
+    hasSite: string;
+    yes: string;
+    no: string;
+    site: string;
+    sitePlaceholder: string;
+    difficulty: string;
+    submit: string;
+    sending: string;
+    success: string;
+    errorInvalid: string;
+    errorSend: string;
+  };
   hero: {
     title: string;
     description: string;
@@ -129,7 +163,6 @@ export type Dictionary = {
   early: {
     title: string;
     description: string;
-    cta: string;
     support: string;
   };
   faq: {

@@ -26,10 +26,9 @@ const languageNames = {
 type SiteHeaderProps = {
   locale: Locale;
   dict: Dictionary;
-  formUrl: string | null;
 };
 
-export function SiteHeader({ locale, dict, formUrl }: SiteHeaderProps) {
+export function SiteHeader({ locale, dict }: SiteHeaderProps) {
   const sections = sectionIds.map(([key, id]) => ({
     id,
     label: dict.nav[key],
@@ -64,14 +63,11 @@ export function SiteHeader({ locale, dict, formUrl }: SiteHeaderProps) {
             <ThemeToggle toDark={dict.theme.toDark} toLight={dict.theme.toLight} />
             <div className="hidden xl:block">
               <EarlyAccessLink
-                href={formUrl}
                 label={dict.nav.cta}
-                unavailable={dict.form.unavailable}
-                newTab={dict.form.newTab}
                 variant="nav"
               />
             </div>
-            <MobileMenu dict={dict} formUrl={formUrl} sections={sections} />
+            <MobileMenu dict={dict} sections={sections} />
           </div>
         </div>
       </div>
@@ -128,11 +124,9 @@ function LanguageMenu({
 
 function MobileMenu({
   dict,
-  formUrl,
   sections,
 }: {
   dict: Dictionary;
-  formUrl: string | null;
   sections: { id: string; label: string }[];
 }) {
   return (
@@ -163,10 +157,8 @@ function MobileMenu({
           ))}
         </ul>
         <EarlyAccessLink
-          href={formUrl}
           label={dict.nav.cta}
-          unavailable={dict.form.unavailable}
-          newTab={dict.form.newTab}
+          detailsId="mobile-nav"
           className="mt-6 w-full"
         />
       </nav>

@@ -15,6 +15,7 @@ import {
   PiWhatsappLogoDuotone,
 } from "react-icons/pi";
 import { CatalogDemo } from "@/components/catalog-demo";
+import { ContactForm } from "@/components/contact-form";
 import { EarlyAccessLink } from "@/components/early-access-link";
 import { HeroPreview } from "@/components/hero-preview";
 import { PortalPreview } from "@/components/portal-preview";
@@ -24,7 +25,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Wordmark } from "@/components/wordmark";
 import type { Dictionary } from "@/lib/dictionary";
 import { htmlLang, type Locale } from "@/lib/i18n";
-import { getContactEmail, getFormUrl, getSocialLinks, type SocialLinks } from "@/lib/site";
+import { getContactEmail, getSocialLinks, type SocialLinks } from "@/lib/site";
 
 const valueIcons = [PiPaletteDuotone, PiListBulletsDuotone, PiShareNetworkDuotone, PiWhatsappLogoDuotone, PiPencilLineDuotone];
 const featureIcons = [
@@ -50,7 +51,6 @@ const footerLinks = [
 ] as const;
 
 export function LandingPage({ locale, dict }: { locale: Locale; dict: Dictionary }) {
-  const formUrl = getFormUrl(locale);
   const email = getContactEmail();
   const socials = getSocialLinks();
 
@@ -60,25 +60,25 @@ export function LandingPage({ locale, dict }: { locale: Locale; dict: Dictionary
       <a href="#conteudo" className="skip-link">
         {dict.a11y.skip}
       </a>
-      <SiteHeader locale={locale} dict={dict} formUrl={formUrl} />
+      <SiteHeader locale={locale} dict={dict} />
       <main id="conteudo">
-        <Hero dict={dict} formUrl={formUrl} />
+        <Hero dict={dict} />
         <Problem dict={dict} />
         <Value dict={dict} />
-        <Demo dict={dict} formUrl={formUrl} />
+        <Demo dict={dict} />
         <Features dict={dict} />
         <HowItWorks dict={dict} />
         <Expansion dict={dict} />
         <Portal dict={dict} />
-        <EarlyAccess dict={dict} formUrl={formUrl} />
+        <EarlyAccess locale={locale} dict={dict} />
         <Faq dict={dict} />
       </main>
-      <Footer dict={dict} formUrl={formUrl} email={email} socials={socials} />
+      <Footer dict={dict} email={email} socials={socials} />
     </>
   );
 }
 
-function Hero({ dict, formUrl }: { dict: Dictionary; formUrl: string | null }) {
+function Hero({ dict }: { dict: Dictionary }) {
   return (
     <section className="overflow-hidden pb-6 pt-6 lg:flex lg:h-[calc(100dvh-4.25rem)] lg:items-center lg:py-4">
       <div className={`${shell} grid items-center gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10`}>
@@ -89,10 +89,7 @@ function Hero({ dict, formUrl }: { dict: Dictionary; formUrl: string | null }) {
           <p className="mt-4 max-w-md text-pretty text-base leading-6 text-muted">{dict.hero.description}</p>
           <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <EarlyAccessLink
-              href={formUrl}
               label={dict.hero.primary}
-              unavailable={dict.form.unavailable}
-              newTab={dict.form.newTab}
             />
             <a
               href="#produto"
@@ -111,7 +108,7 @@ function Hero({ dict, formUrl }: { dict: Dictionary; formUrl: string | null }) {
 
 function Problem({ dict }: { dict: Dictionary }) {
   return (
-    <section id="problema" className="scroll-mt-24 py-10 sm:py-14">
+    <section id="problema" className="scroll-mt-[4.25rem] py-10 sm:py-14">
       <div className={shell}>
         <h2 className="max-w-3xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
           {dict.problem.title}
@@ -136,7 +133,7 @@ function Problem({ dict }: { dict: Dictionary }) {
 
 function Value({ dict }: { dict: Dictionary }) {
   return (
-    <section id="proposta" className="scroll-mt-24 py-4 sm:py-6">
+    <section id="proposta" className="scroll-mt-[4.25rem] py-4 sm:py-6">
       <div className={shell}>
         <div className="grid gap-10 rounded-[2rem] bg-paper px-6 py-8 shadow-[0_30px_80px_-48px_rgba(18,28,48,0.45)] ring-1 ring-line sm:px-10 sm:py-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
           <div>
@@ -168,9 +165,9 @@ function Value({ dict }: { dict: Dictionary }) {
   );
 }
 
-function Demo({ dict, formUrl }: { dict: Dictionary; formUrl: string | null }) {
+function Demo({ dict }: { dict: Dictionary }) {
   return (
-    <section id="produto" className="scroll-mt-24 py-10 sm:py-14">
+    <section id="produto" className="scroll-mt-[4.25rem] py-10 sm:py-14">
       <div className={shell}>
         <h2 className="max-w-3xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
           {dict.demo.title}
@@ -183,10 +180,7 @@ function Demo({ dict, formUrl }: { dict: Dictionary; formUrl: string | null }) {
         <p className="mt-4 text-sm text-muted">{dict.preview.photoCredit}</p>
         <div className="mt-8">
           <EarlyAccessLink
-            href={formUrl}
             label={dict.demo.cta}
-            unavailable={dict.form.unavailable}
-            newTab={dict.form.newTab}
           />
         </div>
       </div>
@@ -196,7 +190,7 @@ function Demo({ dict, formUrl }: { dict: Dictionary; formUrl: string | null }) {
 
 function Features({ dict }: { dict: Dictionary }) {
   return (
-    <section id="recursos" className="scroll-mt-24 py-4 sm:py-6">
+    <section id="recursos" className="scroll-mt-[4.25rem] py-4 sm:py-6">
       <div className={shell}>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
@@ -228,7 +222,7 @@ function Features({ dict }: { dict: Dictionary }) {
 
 function HowItWorks({ dict }: { dict: Dictionary }) {
   return (
-    <section id="funcionamento" className="scroll-mt-24 py-10 sm:py-14">
+    <section id="funcionamento" className="scroll-mt-[4.25rem] py-10 sm:py-14">
       <div className={shell}>
         <h2 className="mx-auto max-w-3xl text-balance text-center text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-ink sm:text-5xl">
           {dict.how.title}
@@ -250,7 +244,7 @@ function HowItWorks({ dict }: { dict: Dictionary }) {
 
 function Expansion({ dict }: { dict: Dictionary }) {
   return (
-    <section id="expansao" className="scroll-mt-24 py-4 sm:py-6">
+    <section id="expansao" className="scroll-mt-[4.25rem] py-4 sm:py-6">
       <div className={shell}>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
           <div>
@@ -280,7 +274,7 @@ function Expansion({ dict }: { dict: Dictionary }) {
 
 function Portal({ dict }: { dict: Dictionary }) {
   return (
-    <section id="portal" className="scroll-mt-24 py-10 sm:py-14">
+    <section id="portal" className="scroll-mt-[4.25rem] py-10 sm:py-14">
       <div className={`${shell} grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(16rem,0.85fr)]`}>
         <div>
           <p className="text-sm font-medium text-blue">{dict.portal.kicker}</p>
@@ -303,23 +297,17 @@ function Portal({ dict }: { dict: Dictionary }) {
   );
 }
 
-function EarlyAccess({ dict, formUrl }: { dict: Dictionary; formUrl: string | null }) {
+function EarlyAccess({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
-    <section id="acesso" className="scroll-mt-24 py-4 sm:py-6">
+    <section id="acesso" className="scroll-mt-[4.25rem] py-4 sm:py-6">
       <div className={shell}>
         <div className="overflow-hidden rounded-[2rem] bg-panel px-6 py-10 text-panel-fg sm:px-12 sm:py-12">
           <h2 className="max-w-2xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] sm:text-5xl">
             {dict.early.title}
           </h2>
           <p className="mt-5 max-w-xl text-pretty text-base leading-7 text-white/75 sm:text-lg">{dict.early.description}</p>
-          <div className="mt-8">
-            <EarlyAccessLink
-              href={formUrl}
-              label={dict.early.cta}
-              unavailable={dict.form.unavailable}
-              newTab={dict.form.newTab}
-              variant="inverse"
-            />
+          <div className="mt-8 max-w-2xl">
+            <ContactForm locale={locale} dict={dict} />
           </div>
           <p className="mt-4 text-sm text-white/60">{dict.early.support}</p>
         </div>
@@ -330,7 +318,7 @@ function EarlyAccess({ dict, formUrl }: { dict: Dictionary; formUrl: string | nu
 
 function Faq({ dict }: { dict: Dictionary }) {
   return (
-    <section id="perguntas" className="scroll-mt-24 py-10 sm:py-14">
+    <section id="perguntas" className="scroll-mt-[4.25rem] py-10 sm:py-14">
       <div className={`${shell} grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16`}>
         <h2 className="text-balance text-3xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">{dict.faq.title}</h2>
         <div>
@@ -365,12 +353,10 @@ const socialIcons: {
 
 function Footer({
   dict,
-  formUrl,
   email,
   socials,
 }: {
   dict: Dictionary;
-  formUrl: string | null;
   email: string | null;
   socials: SocialLinks;
 }) {
@@ -399,10 +385,7 @@ function Footer({
           </nav>
           <div className="mt-5">
             <EarlyAccessLink
-              href={formUrl}
               label={dict.footer.early}
-              unavailable={dict.form.unavailable}
-              newTab={dict.form.newTab}
               variant="nav"
             />
           </div>

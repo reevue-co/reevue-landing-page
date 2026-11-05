@@ -11,7 +11,7 @@ npm run dev
 
 Abra [http://localhost:3000](http://localhost:3000). O servidor redireciona para `/pt-br`.
 
-Para simular os formulários, copie `.env.example` para `.env.local` e preencha as URLs.
+Para o formulário enviar de verdade, copie `.env.example` para `.env.local` e preencha as variáveis do Google Sheets (veja abaixo).
 
 ```bash
 npm run lint
@@ -28,14 +28,18 @@ Os textos visíveis ficam nos dicionários tipados:
 
 O tipo compartilhado está em `lib/dictionary.ts`. Uma chave nova precisa existir nos dois idiomas, senão o TypeScript acusa o erro. Componentes reutilizam esses dicionários; não espalhe frases soltas pela interface.
 
-## Configurar o Google Forms
+## Formulário de contato → Google Sheets
 
-Defina as variáveis públicas:
+O formulário (nome, perfil, imobiliária, país, estado, cidade, DDI + WhatsApp, e-mail, interesse, solução, site e dificuldade) envia os dados por uma Server Action para um Google Apps Script, que grava uma linha na planilha.
 
-- `NEXT_PUBLIC_GOOGLE_FORM_URL_PT`
-- `NEXT_PUBLIC_GOOGLE_FORM_URL_ES`
+1. Crie uma planilha no Google Sheets.
+2. Extensões → Apps Script. Cole o conteúdo de `scripts/google-sheet.gs`.
+3. Configurações do projeto → Propriedades do script → adicione `SECRET` com uma senha longa qualquer.
+4. Implantar → Nova implantação → tipo "App da Web". Executar como: você. Quem tem acesso: qualquer pessoa. Autorize e copie a URL `/exec`.
+5. No `.env.local` (e na Vercel): `GOOGLE_SHEET_WEBHOOK_URL` = URL copiada, `GOOGLE_SHEET_WEBHOOK_SECRET` = o mesmo `SECRET`.
+6. Reinicie `npm run dev`. Se alterar o script depois, crie uma nova versão da implantação.
 
-As duas podem usar a mesma URL. Todos os botões de acesso antecipado abrem o formulário do idioma atual em uma nova aba. Se a variável estiver vazia ou não for um endereço `http`/`https`, o botão deixa de navegar e mostra o aviso de cadastro em breve. Não há integração direta com planilhas.
+Sem essas variáveis o formulário mostra o erro de envio.
 
 ## Publicar na Vercel
 

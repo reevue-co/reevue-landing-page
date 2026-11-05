@@ -1,10 +1,8 @@
-import { PiArrowUpRightBold } from "react-icons/pi";
+import { DismissLink } from "@/components/dismiss-link";
 
 type EarlyAccessLinkProps = {
-  href: string | null;
   label: string;
-  unavailable: string;
-  newTab: string;
+  detailsId?: string;
   variant?: "primary" | "inverse" | "nav";
   className?: string;
 };
@@ -15,17 +13,9 @@ const available: Record<NonNullable<EarlyAccessLinkProps["variant"]>, string> = 
   nav: "bg-ink px-4 py-2 text-sm text-background hover:opacity-85",
 };
 
-const missing: Record<NonNullable<EarlyAccessLinkProps["variant"]>, string> = {
-  primary: "bg-line text-muted",
-  inverse: "bg-white/12 text-panel-fg",
-  nav: "bg-line px-4 py-2 text-sm text-muted",
-};
-
 export function EarlyAccessLink({
-  href,
   label,
-  unavailable,
-  newTab,
+  detailsId,
   variant = "primary",
   className = "",
 }: EarlyAccessLinkProps) {
@@ -33,23 +23,16 @@ export function EarlyAccessLink({
     variant === "nav"
       ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-full font-semibold"
       : "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-sm font-semibold leading-tight sm:whitespace-nowrap";
+  const classes = `${shape} ${available[variant]} motion-safe:transition-[transform,background-color] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:active:scale-[0.98] ${className}`;
 
-  if (!href) {
-    return (
-      <p className={`${shape} ${missing[variant]} cursor-default ${className}`}>{unavailable}</p>
-    );
-  }
-
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${label}. ${newTab}`}
-      className={`${shape} ${available[variant]} motion-safe:transition-[transform,background-color] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:active:scale-[0.98] ${className}`}
-    >
-      <span aria-hidden="true">{label}</span>
-      <PiArrowUpRightBold className="size-4 shrink-0" />
+  // The mobile menu must close when the link scrolls to the form.
+  return detailsId ? (
+    <DismissLink href="#acesso" detailsId={detailsId} className={classes}>
+      {label}
+    </DismissLink>
+  ) : (
+    <a href="#acesso" className={classes}>
+      {label}
     </a>
   );
 }

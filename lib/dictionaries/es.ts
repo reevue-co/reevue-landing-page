@@ -2,9 +2,9 @@ import type { Dictionary } from "@/lib/dictionary";
 
 export const es = {
   meta: {
-    title: "Reevue | Sitio y catálogo para inmobiliarias",
+    title: "Reevue | Sitio web y catálogo para inmobiliarias",
     description:
-      "Reevue está en desarrollo para inmobiliarias que necesitan presentar su marca, organizar la venta y el alquiler y actualizar el catálogo con más claridad. Registra tu interés en el acceso anticipado.",
+      "Reevue, en desarrollo: sitio web y catálogo para inmobiliarias. Presenta tu marca, ordena venta y alquiler y actualiza el catálogo con claridad.",
   },
   a11y: {
     skip: "Ir al contenido",
@@ -33,8 +33,39 @@ export const es = {
     toLight: "Usar tema claro",
   },
   form: {
-    unavailable: "Registro disponible pronto",
     newTab: "Se abre en una pestaña nueva",
+    name: "Nombre completo",
+    profile: "Perfil",
+    profileAgency: "Inmobiliaria",
+    profileIndependent: "Independiente",
+    profileAgent: "Agente inmobiliario",
+    profileOwner: "Propietario",
+    agencyName: "Nombre de la inmobiliaria",
+    country: "País",
+    dial: "Lada",
+    state: "Estado / provincia",
+    city: "Ciudad",
+    phone: "WhatsApp",
+    email: "Correo electrónico",
+    optional: "(opcional)",
+    interest: "Interés",
+    interestRent: "Alquiler",
+    interestSale: "Venta",
+    solution: "¿Qué solución te interesa?",
+    solutionPortal: "Portal de anuncios",
+    solutionSite: "Sitio web y gestión para inmobiliarias",
+    solutionBoth: "Ambas",
+    hasSite: "¿Ya tienes un sitio web?",
+    yes: "Sí",
+    no: "No",
+    site: "Dirección de tu sitio web",
+    sitePlaceholder: "www.tusitio.com",
+    difficulty: "¿Cuál es tu principal dificultad hoy al promocionar o gestionar tus propiedades?",
+    submit: "Registrar mi interés",
+    sending: "Enviando...",
+    success: "Recibimos tus datos. Te contactaremos pronto.",
+    errorInvalid: "Revisa los campos e inténtalo de nuevo.",
+    errorSend: "No se pudo enviar ahora. Inténtalo de nuevo en unos instantes.",
   },
   hero: {
     title: "Tu inmobiliaria creció. ¿Tu sitio web se quedó atrás?",
@@ -294,8 +325,7 @@ export const es = {
     title: "¿Tu inmobiliaria necesita este cambio? Conversemos.",
     description:
       "Registra tu interés, cuenta lo que necesitas y participa en las conversaciones que van a orientar la primera versión de Reevue.",
-    cta: "Quiero participar",
-    support: "Te dirigiremos a un formulario breve de interés.",
+    support: "Utilizaremos tus datos para contactarte sobre Reevue y el acceso anticipado.",
   },
   faq: {
     title: "Preguntas frecuentes",
