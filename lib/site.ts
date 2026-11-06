@@ -28,7 +28,7 @@ export function getGoogleAnalyticsId(): string | null {
 }
 
 export function getContactEmail(): string | null {
-  const value = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim();
+  const value = process.env.NEXT_PUBLIC_EMAIL?.trim();
   if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return null;
   return value;
 }
@@ -43,11 +43,11 @@ export type SocialLinks = {
 
 export function getSocialLinks(): SocialLinks {
   return {
-    facebook: httpUrl(process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK),
-    instagram: httpUrl(process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM),
-    linkedin: httpUrl(process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN),
-    youtube: httpUrl(process.env.NEXT_PUBLIC_SOCIAL_YOUTUBE),
-    tiktok: httpUrl(process.env.NEXT_PUBLIC_SOCIAL_TIKTOK),
+    facebook: httpUrl(process.env.NEXT_PUBLIC_FACEBOOK_URL),
+    instagram: httpUrl(process.env.NEXT_PUBLIC_INSTAGRAM_URL),
+    linkedin: httpUrl(process.env.NEXT_PUBLIC_LINKEDIN_URL),
+    youtube: httpUrl(process.env.NEXT_PUBLIC_YOUTUBE_URL),
+    tiktok: httpUrl(process.env.NEXT_PUBLIC_TIKTOK_URL),
   };
 }
 

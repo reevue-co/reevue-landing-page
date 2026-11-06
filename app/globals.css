@@ -205,6 +205,22 @@ details.group[open] .faq-icon {
   }
 }
 
+@keyframes lead-drawer {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lead-drawer {
+    animation: lead-drawer 220ms ease-out;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -24,6 +24,20 @@ const sheetPath = path.join(process.cwd(), "data", "contacts.xls");
 
 let pending: Promise<void> = Promise.resolve();
 
+export async function readLocalSheetRows(): Promise<string[][]> {
+  let xml: string;
+  try {
+    xml = await readFile(sheetPath, "utf8");
+  } catch (error) {
+    if (isMissing(error)) return [];
+    throw error;
+  }
+
+  return [...xml.matchAll(/<Row>([\s\S]*?)<\/Row>/g)].slice(1).map((match) =>
+    [...match[1].matchAll(/<Data ss:Type="String">([\s\S]*?)<\/Data>/g)].map((cell) => unescapeXml(cell[1])),
+  );
+}
+
 export function appendLocalLead(values: string[]): Promise<void> {
   const run = pending.then(() => writeLead(values));
   pending = run.then(
@@ -64,6 +78,14 @@ ${rows}
 function row(values: string[]) {
   const cells = values.map((value) => `<Cell><Data ss:Type="String">${escapeXml(value)}</Data></Cell>`).join("");
   return `<Row>${cells}</Row>`;
+}
+
+function unescapeXml(value: string) {
+  return value
+    .replaceAll("&amp;", "&")
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">")
+    .replaceAll("&quot;", '"');
 }
 
 function escapeXml(value: string) {
